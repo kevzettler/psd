@@ -23,14 +23,14 @@ pub trait IntoRgba {
     /// The fourth channel
     fn alpha(&self) -> Option<&ChannelBytes>;
 
-    /// The width of the PSD
-    fn psd_width(&self) -> u32;
+    /// The width of the layer
+    fn pixel_width(&self) -> u32;
 
-    /// The height of the PSD
-    fn psd_height(&self) -> u32;
+    /// The height of the layer
+    fn pixel_height(&self) -> u32;
 
     fn generate_rgba(&self) -> Vec<u8> {
-        let rgba_len = (self.psd_width() * self.psd_height() * 4) as usize;
+        let rgba_len = (self.pixel_width() * self.pixel_height() * 4) as usize;
 
         let red = self.red();
         let green = self.green();
@@ -176,7 +176,6 @@ pub trait IntoRgba {
                 for _ in 0..repeat as usize {
                     let rgba_idx = self.rgba_idx(idx);
                     rgba[rgba_idx * 4 + offset] = byte;
-
                     idx += 1;
                 }
             };

@@ -312,11 +312,11 @@ impl IntoRgba for Psd {
         self.image_data_section.alpha.as_ref()
     }
 
-    fn psd_width(&self) -> u32 {
+    fn pixel_width(&self) -> u32 {
         self.width()
     }
 
-    fn psd_height(&self) -> u32 {
+    fn pixel_height(&self) -> u32 {
         self.height()
     }
 }

@@ -133,11 +133,11 @@ impl LayerProperties {
 #[derive(Debug, Clone)]
 pub struct PsdGroup {
     /// Group unique identifier
-    pub(in crate) id: u32,
+    pub(crate) id: u32,
     /// Idx range of contained layers
-    pub(in crate) contained_layers: Range<usize>,
+    pub(crate) contained_layers: Range<usize>,
     /// Common layer properties
-    pub(in crate) layer_properties: LayerProperties,
+    pub(crate) layer_properties: LayerProperties,
 }
 
 impl PsdGroup {
@@ -188,9 +188,9 @@ pub struct PsdLayer {
     /// channel, or you might make use of the layer masks.
     ///
     /// Storing the channels separately allows for this flexability.
-    pub(in crate) channels: LayerChannels,
+    pub(crate) channels: LayerChannels,
     /// Common layer properties
-    pub(in crate) layer_properties: LayerProperties,
+    pub(crate) layer_properties: LayerProperties,
 }
 
 /// An error when working with a PsdLayer
@@ -435,7 +435,7 @@ impl IntoRgba for PsdLayer {
 
         let top_in_psd = idx / self.width() as usize + self.layer_properties.layer_top as usize;
 
-        (top_in_psd * self.layer_properties.psd_width as usize) + left_in_psd
+        (top_in_psd * self.layer_properties.width() as usize) + left_in_psd
     }
 
     fn red(&self) -> &ChannelBytes {
@@ -454,11 +454,11 @@ impl IntoRgba for PsdLayer {
         self.get_channel(PsdChannelKind::TransparencyMask)
     }
 
-    fn psd_width(&self) -> u32 {
-        self.layer_properties.psd_width
+    fn pixel_width(&self) -> u32 {
+        u32::from(self.layer_properties.width())
     }
 
-    fn psd_height(&self) -> u32 {
-        self.layer_properties.psd_height
+    fn pixel_height(&self) -> u32 {
+        u32::from(self.layer_properties.height())
     }
 }
